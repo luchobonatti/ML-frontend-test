@@ -4,18 +4,14 @@ import queryString from "query-string";
 import { fetchProducts } from "../modules/Products/productsActions";
 import LoaderSpinner from "../components/Loader";
 import ItemRow from "../components/ItemRow";
-import Breadcrumb from "../components/Breadcrumb"
+import Breadcrumb from "../components/Breadcrumb";
 
 class ItemsResult extends React.Component {
   componentDidMount() {
     const {
       location: { search }
     } = this.props;
-    // Parse Query string for get search string
-    const toSearch = queryString.parse(search);
-    if (!!toSearch.q && toSearch.q.length) {
-      this.fetchProducts(toSearch.q);
-    }
+    this.fetchProducts(this.getSearchQueryString(search));
   }
 
   fetchProducts(searchString) {
@@ -32,20 +28,37 @@ class ItemsResult extends React.Component {
     } = prevProps;
 
     if (oldSearch !== newSearch) {
-      this.fetchProducts(newSearch);
+      this.fetchProducts(this.getSearchQueryString(newSearch));
     }
   }
 
+  getSearchQueryString = string => {
+    // Parse Query string for get search string
+    const toSearch = queryString.parse(string);
+    if (!!toSearch.q) return toSearch.q;
+    return false;
+  };
+
   render() {
     const {
-      products: { loading, error, items, categories }
+      products: { loading, error, items, categories },
+      location: { search }
     } = this.props;
     if (loading) {
       return <LoaderSpinner />;
     }
     if (error) {
-      return <p>Ups, algo salió mal.</p>;
+      return <p className="py-4 text-center">Ups, algo salió mal.</p>;
     }
+
+    if (!items.length) {
+      return (
+        <h3 className="py-5 text-center">
+          No hay publicaciones que coincidan con tu búsqueda.
+        </h3>
+      );
+    }
+
     return (
       <div className="container">
         <Breadcrumb categories={categories} />
@@ -54,9 +67,8 @@ class ItemsResult extends React.Component {
           itemScope
           itemType="http://schema.org/ItemList"
         >
-          {/*<meta itemprop="numberOfItems" value={items.length} />*/}
           {items.map(item => (
-            <ItemRow key={item.id} {...item}/>
+            <ItemRow key={item.id} {...item} />
           ))}
         </div>
       </div>

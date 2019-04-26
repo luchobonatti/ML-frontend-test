@@ -1,22 +1,21 @@
 import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_FAILURE
+  FETCH_PRODUCTS_FAILURE, FETCH_SINGLE_PRODUCT_BEGIN, FETCH_SINGLE_PRODUCT_SUCCESS, FETCH_SINGLE_PRODUCT_FAILURE
 } from "./productsActions";
 
 const initialState = {
   items: [],
-  loading: false,
+  loading: true,
   error: null,
   categories: [],
-  author: []
+  author: [],
+  item: {}
 };
 
 export default function productReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_PRODUCTS_BEGIN:
-      // Mark the state as "loading" so we can show a spinner or something
-      // Also, reset any errors. We're starting fresh.
       return {
         ...state,
         loading: true,
@@ -24,24 +23,34 @@ export default function productReducer(state = initialState, action) {
       };
 
     case FETCH_PRODUCTS_SUCCESS:
-      // All done: set loading "false".
-      // Also, replace the items with the ones from the server
-      const { error, items, author, categories } = action.payload;
       return {
         ...state,
         loading: false,
-        items,
-        author,
-        categories,
-        error
+        ...action.payload
       };
 
     case FETCH_PRODUCTS_FAILURE:
-      // The request failed, but it did stop, so set loading to "false".
-      // Save the error, and we can display it somewhere
-      // Since it failed, we don't have items to display anymore, so set it empty.
-      // This is up to you and your app though: maybe you want to keep the items
-      // around! Do whatever seems right.
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      };
+
+    case FETCH_SINGLE_PRODUCT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case FETCH_SINGLE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ...action.payload
+      };
+
+    case FETCH_SINGLE_PRODUCT_FAILURE:
       return {
         ...state,
         loading: false,
@@ -49,7 +58,6 @@ export default function productReducer(state = initialState, action) {
       };
 
     default:
-      // ALWAYS have a default case in a reducer
       return state;
   }
 }

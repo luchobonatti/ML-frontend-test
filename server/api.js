@@ -11,7 +11,7 @@ const MLRequester = axios.create({
 router.get("/items", async ({ query: { q } }, res, next) => {
   if (!q) {
     res
-      .status(500)
+      .status(404)
       .send({ error: "You must provide search string!", data: [] });
   }
   try {
@@ -35,14 +35,15 @@ router.get("/items/:id", async ({ params: { id } }, res, next) => {
     const { data: category } = await MLRequester.get(
       `/categories/${detail.category_id}`
     );
-
-    res.send(
-      itemDetailsParser({
+    res.send({
+      error: false,
+      data: itemDetailsParser({
         detail,
         description,
         category
       })
-    );
+    });
+    res.send();
   } catch (err) {
     next(err.data);
   }

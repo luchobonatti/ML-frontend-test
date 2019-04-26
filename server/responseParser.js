@@ -25,7 +25,6 @@ const itemsParser = ({ results, filters }) => {
 
   if (!!filters[0]) {
     const { path_from_root } = filters[0].values[0];
-    console.log(path_from_root);
     path_from_root.map(category => categories.push(category.name));
   }
 
@@ -42,7 +41,7 @@ const itemDetailsParser = item => {
       amount: detail.price,
       decimals: countDecimals(detail.price)
     },
-    picture: detail.thumbnail,
+    picture: detail.pictures[0].url,
     condition: detail.condition,
     free_shipping: detail.shipping.free_shipping,
     sold_quantity: detail.sold_quantity,
