@@ -41,8 +41,7 @@ class ItemsResult extends React.Component {
 
   render() {
     const {
-      products: { loading, error, items, categories },
-      location: { search }
+      products: { loadingItems: loading, error, items, categories },
     } = this.props;
     if (loading) {
       return <LoaderSpinner />;

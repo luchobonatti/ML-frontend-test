@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleProduct } from "../modules/Products/productsActions";
 import Breadcrumb from "./../components/Breadcrumb";
 import LoaderSpinner from "./../components/Loader";
 import Price from "../components/Price";
 
-class ItemDetail extends Component {
+class ItemDetail extends React.Component {
   componentDidMount() {
     const {
       match: {
@@ -27,10 +27,9 @@ class ItemDetail extends Component {
 
   render() {
     const {
-      products: { item, author, categories, loading, error }
+      products: { item, author, categories, loadingItem, error }
     } = this.props;
-    console.log(loading);
-    if (loading) {
+    if (loadingItem) {
       return <LoaderSpinner />;
     }
 
@@ -69,7 +68,9 @@ class ItemDetail extends Component {
                   </p>
                   <h3 className="title">{item.title}</h3>
                   <h3 className="price">
-                    <Price className="price" value={item.price.amount} />
+                    {item.price && (
+                      <Price className="price" value={item.price.amount} />
+                    )}
                   </h3>
                   <a href="#" className="btn btn-primary">
                     Comprar

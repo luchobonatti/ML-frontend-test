@@ -1,59 +1,63 @@
 import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_FAILURE, FETCH_SINGLE_PRODUCT_BEGIN, FETCH_SINGLE_PRODUCT_SUCCESS, FETCH_SINGLE_PRODUCT_FAILURE
+  FETCH_PRODUCTS_FAILURE,
+  FETCH_SINGLE_PRODUCT_BEGIN,
+  FETCH_SINGLE_PRODUCT_SUCCESS,
+  FETCH_SINGLE_PRODUCT_FAILURE
 } from "./productsActions";
 
 const initialState = {
   items: [],
-  loading: true,
+  loadingItems: false,
   error: null,
   categories: [],
   author: [],
-  item: {}
+  item: {},
+  loadingItem: false
 };
 
 export default function productReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCH_SINGLE_PRODUCT_BEGIN:
+      return {
+        ...state,
+        loadingItem: true,
+        error: null
+      };
+
     case FETCH_PRODUCTS_BEGIN:
       return {
         ...state,
-        loading: true,
+        loadingItems: true,
         error: null
       };
 
     case FETCH_PRODUCTS_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingItems: false,
         ...action.payload
       };
 
     case FETCH_PRODUCTS_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingItems: false,
         error: action.payload.error
-      };
-
-    case FETCH_SINGLE_PRODUCT_BEGIN:
-      return {
-        ...state,
-        loading: true,
-        error: null
       };
 
     case FETCH_SINGLE_PRODUCT_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingItem: false,
         ...action.payload
       };
 
     case FETCH_SINGLE_PRODUCT_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingItem: false,
         error: action.payload.error
       };
 
