@@ -71,8 +71,7 @@
     "start": "node scripts/start.js",
     "server": "node-env-run ./server --exec nodemon | pino-colada",
     "dev": "run-p server start",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "build": "node scripts/build.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -122,10 +121,6 @@
       "web.jsx",
       "jsx",
       "node"
-    ],
-    "watchPlugins": [
-      "/Users/development/Sites/ml-fe/node_modules/jest-watch-typeahead/filename.js",
-      "/Users/development/Sites/ml-fe/node_modules/jest-watch-typeahead/testname.js"
     ]
   },
   "babel": {

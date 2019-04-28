@@ -8,10 +8,12 @@ Mercado Libre Front end test exercise. App Stack:
 * Redux 4
 * Bootstrap 4
 
-Developent Notes: 
+Notes: 
  * Node version: > 10.x
+ 
 
 ## Scripts
+Run ```npm install``` to install all project dependencies.
 
 In the project directory, you can run:
 
