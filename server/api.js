@@ -9,11 +9,6 @@ const MLRequester = axios.create({
 });
 
 router.get("/items", async ({ query: { q } }, res, next) => {
-  if (!q) {
-    res
-      .status(404)
-      .send({ error: "You must provide search string!", data: [] });
-  }
   try {
     const {
       data: { results, filters }

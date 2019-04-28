@@ -27,7 +27,7 @@ class ItemDetail extends React.Component {
 
   render() {
     const {
-      products: { item, author, categories, loadingItem, error }
+      products: { item, categories, loadingItem, error }
     } = this.props;
     if (loadingItem) {
       return <LoaderSpinner />;
@@ -72,7 +72,7 @@ class ItemDetail extends React.Component {
                       <Price className="price" value={item.price.amount} />
                     )}
                   </h3>
-                  <a href="#" className="btn btn-primary">
+                  <a href="/" className="btn btn-primary">
                     Comprar
                   </a>
                 </div>
